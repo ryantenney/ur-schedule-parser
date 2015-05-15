@@ -89,16 +89,52 @@ public class ScheduleParser {
 						if (timeCodeCell != null) {
 							LocalDateTime startDate, endDate;
 							switch (timeCodeCell) {
+								case "D":
+									startDate = date.toLocalDateTime(new LocalTime(7, 0, 0));
+									endDate = date.toLocalDateTime(new LocalTime(15, 0, 0));
+									schedule.add(new Shift("Day Shift", startDate, endDate));
+									break;
+
 								case "D12":
 									startDate = date.toLocalDateTime(new LocalTime(7, 0, 0));
 									endDate = date.toLocalDateTime(new LocalTime(19, 0, 0));
 									schedule.add(new Shift("Day Shift", startDate, endDate));
 									break;
 
+								case "N":
+									startDate = date.minusDays(1).toLocalDateTime(new LocalTime(23, 0, 0));
+									endDate = date.toLocalDateTime(new LocalTime(7, 0, 0));
+									schedule.add(new Shift("Night Shift", startDate, endDate));
+									break;
+
 								case "N12":
 									startDate = date.minusDays(1).toLocalDateTime(new LocalTime(19, 0, 0));
 									endDate = date.toLocalDateTime(new LocalTime(7, 0, 0));
 									schedule.add(new Shift("Night Shift", startDate, endDate));
+									break;
+
+								case "E":
+									startDate = date.toLocalDateTime(new LocalTime(15, 0, 0));
+									endDate = date.toLocalDateTime(new LocalTime(23, 0, 0));
+									schedule.add(new Shift("Evening Shift", startDate, endDate));
+									break;
+
+								case "E12":
+									startDate = date.toLocalDateTime(new LocalTime(11, 0, 0));
+									endDate = date.toLocalDateTime(new LocalTime(23, 0, 0));
+									schedule.add(new Shift("Evening Shift", startDate, endDate));
+									break;
+
+								case "E4A":
+									startDate = date.toLocalDateTime(new LocalTime(15, 0, 0));
+									endDate = date.toLocalDateTime(new LocalTime(19, 0, 0));
+									schedule.add(new Shift("Evening Shift", startDate, endDate));
+									break;
+
+								case "E4B":
+									startDate = date.toLocalDateTime(new LocalTime(19, 0, 0));
+									endDate = date.toLocalDateTime(new LocalTime(23, 0, 0));
+									schedule.add(new Shift("Evening Shift", startDate, endDate));
 									break;
 
 								case "DE8":
@@ -114,10 +150,17 @@ public class ScheduleParser {
 
 						String npTimeCell = trim(npTimeRow.get(col).text());
 						if (npTimeCell != null) {
+							LocalDateTime startDate, endDate;
 							switch (npTimeCell) {
+								case "UC4":
+									startDate = date.toLocalDateTime(new LocalTime(7, 0, 0));
+									endDate = date.toLocalDateTime(new LocalTime(11, 0, 0));
+									schedule.add(new Shift("Unit Council", startDate, endDate));
+									break;
+
 								case "WC4":
-									LocalDateTime startDate = date.toLocalDateTime(new LocalTime(7, 0, 0));
-									LocalDateTime endDate = date.toLocalDateTime(new LocalTime(11, 0, 0));
+									startDate = date.toLocalDateTime(new LocalTime(7, 0, 0));
+									endDate = date.toLocalDateTime(new LocalTime(11, 0, 0));
 									schedule.add(new Shift("Wound Care", startDate, endDate));
 									break;
 
